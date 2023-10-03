@@ -20,10 +20,10 @@ public class PostService {
         try {
             String sql = "DECLARE @success bit, @message nvarchar(100); " +
                     "EXEC [dbo].[InsertToTblPost] " +
-                    "@id =" + model.Id + "," +
-                    "@title = " + model.Tiltle + "," +
-                    "@createdBy =" + model.CreatedBy + "," +
-                    "@description = " + model.Description + "," +
+                    "@id =" + model.getId() + "," +
+                    "@title = " + model.getTitle() + "," +
+                    "@createdBy =" + model.getCreatedBy() + "," +
+                    "@description = " + model.getDescription() + "," +
                     "@success = @success OUTPUT, " +
                     "@message = @message OUTPUT; " +
                     "SELECT @success AS 'success', @message AS 'message';";
