@@ -17,12 +17,12 @@ public class PostController {
 
     @PostMapping("/post")
     public MyResponse[] postPost(@RequestBody PostModel model) {
-        return repo.postDataTobase(model);
+        return repo.postDataToDataBase(model);
     }
 
     @GetMapping("/posts")
     public PostModel[] getPosts() {
-        return repo.getDataFrombase();
+        return repo.getDataFromDataBase();
     }
 
 }

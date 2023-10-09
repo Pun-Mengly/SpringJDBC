@@ -15,7 +15,7 @@ public class PostService {
     @Autowired
     private DatabaseAccessor databaseAccessor;
 
-    public MyResponse[] postDataTobase(PostModel model) {
+    public MyResponse[] postDataToDataBase(PostModel model) {
 
         try {
             String sql = "DECLARE @success bit, @message nvarchar(100); " +
@@ -43,7 +43,7 @@ public class PostService {
 
     }
 
-    public PostModel[] getDataFrombase() {
+    public PostModel[] getDataFromDataBase() {
 
         try {
             String sql = "EXEC GetAllTblPost";
