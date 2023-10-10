@@ -6,23 +6,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.demo2.demo2.Post.Models.MyResponse;
+import com.demo2.demo2.IService.IService;
 import com.demo2.demo2.Post.Models.PostModel;
-import com.demo2.demo2.Post.Services.PostService;
 
 @RestController
 public class PostController {
+
+    private IService<PostModel> service;
+
     @Autowired
-    private PostService repo;
+    public PostController(IService<PostModel> service) {
+        this.service = service;
+    }
 
     @PostMapping("/post")
-    public MyResponse[] postPost(@RequestBody PostModel model) {
-        return repo.postDataToDataBase(model);
+    public PostModel postPost(@RequestBody PostModel model) {
+        return service.post(model);
     }
 
     @GetMapping("/posts")
     public PostModel[] getPosts() {
-        return repo.getDataFromDataBase();
+        return service.get();
     }
 
 }
