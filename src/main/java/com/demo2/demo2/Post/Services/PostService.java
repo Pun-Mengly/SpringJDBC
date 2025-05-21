@@ -11,42 +11,39 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
-public class PostService implements IService<PostModel>{
+public class PostService implements IService<MyResponse,PostModel>{
 
     @Autowired
     private DatabaseAccessor databaseAccessor;
 
     @Override
-    public PostModel post(PostModel model) {
+    public MyResponse post(PostModel model) {
         try {
-            String sql = "DECLARE @success bit, @message nvarchar(100); " +
-                    "EXEC [dbo].[InsertToTblPost] " +
+            String sql ="EXEC [dbo].sp_insertToTblPost " +
                     "@id =" + model.getId() + "," +
                     "@title = " + model.getTitle() + "," +
                     "@createdBy =" + model.getCreatedBy() + "," +
-                    "@description = " + model.getDescription() + "," +
-                    "@success = @success OUTPUT, " +
-                    "@message = @message OUTPUT; " +
-                    "SELECT @success AS 'success', @message AS 'message';";
+                    "@description = " + model.getDescription();
 
             String jsonString = databaseAccessor.accessDatabase(sql);
 
             ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
             MyResponse[] response = objectMapper.readValue(jsonString, MyResponse[].class);
-
-            return model;
+            
+            return response[0];
         } catch (Exception e) {
             MyResponse[] res = new MyResponse[1];
             res[0].setSuccess(false);
             res[0].setMessage(e.getMessage());
-            return model;
+            return res[0];
         }
     }
 
     @Override
     public PostModel[] get() {
          try {
-            String sql = "EXEC GetAllTblPost";
+            String sql = "EXEC sp_getAllTblPost";
             String jsonString = databaseAccessor.accessDatabase(sql);
 
             ObjectMapper objectMapper = new ObjectMapper();
@@ -60,7 +57,7 @@ public class PostService implements IService<PostModel>{
     }
 
     @Override
-    public String test() {
+    public String welcome() {
        return "Post Service";
     }
 

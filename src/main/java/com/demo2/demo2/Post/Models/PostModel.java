@@ -6,13 +6,13 @@ import lombok.Data;
 
 @Data
 public class PostModel {
-    @JsonProperty("Id")
+    @JsonProperty("id")
     private int Id;
-    @JsonProperty("Tiltle")
+    @JsonProperty("title")
     private String Title;
-    @JsonProperty("CreatedBy")
+    @JsonProperty("createdBy")
     private String CreatedBy;
-    @JsonProperty("Description")
+    @JsonProperty("description")
     private String Description;
 
 }
